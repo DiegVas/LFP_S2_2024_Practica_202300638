@@ -12,15 +12,12 @@ contains
 
       !Variables para analisis del archivo
       character(len=100) :: Filename ! Nombre del archivo
-      integer :: start, end, len_line ! Inicio, fin, longitud de la línea
-      character(len=100) :: word ! Primera palabra de la línea
       type(Equipment):: Equipment
 
       !Variables temporales
-      character(len=100) :: tempName
+      character(len=100) :: tempName, tempPrice, tempUbication
       integer :: tempQuantity
-      real :: tempPrice
-      character(len=100) :: tempUbication
+      integer :: pos1, pos2, pos3
 
       ! Inicializar variables
       contenido = ''
@@ -37,15 +34,16 @@ contains
       if (Filename == "0") then
          ! No se ingresó un nombre
          print *, 'No se ingresó un nombre'
+         print *, ""
          return
       end if
 
       ! Abrir archivo
 
       open (newunit=unit_number, file='../data/'//trim(Filename)//'.inv', status='old', action='read', iostat=iostat_val)
-      if (iostat_val /= 0) then
 
-         ! Error al abrir el archivo
+      ! Error al abrir el archivo
+      if (iostat_val /= 0) then
          print *, '--------------------------------'
          print *, 'Error al abrir el archivo o no se encontro el archivo'
          print *, 'Por favor, verifique el nombre del archivo'
@@ -58,15 +56,27 @@ contains
          read (unit_number, '(A)', iostat=iostat_val) line
          if (iostat_val /= 0) exit
          if (index(line, 'crear_equipo') == 1) then
-            ! Extraer los valores
-            read (line(14:), '(A50, I5, F10.2, A50)', iostat=iostat_val) tempName, tempQuantity, tempPrice, tempUbication
-            if (iostat_val == 0) then
-               ! Guardar en el tipo Equipo
-               Equipment%name = trim(tempName)
-               Equipment%quantity = tempQuantity
-               Equipment%price = tempPrice
-               Equipment%ubication = trim(tempUbication)
-               ! Aquí puedes hacer lo que necesites con la variable equipo
+
+            !Econtrar posiciones
+            pos1 = index(line, ';')
+            pos2 = index(line(pos1 + 1:), ';') + pos1
+            pos3 = index(line(pos2 + 1:), ';') + pos2
+
+            !Extraer los valores
+            tempName = adjustl(trim(line(14:pos1 - 1)))
+            read (line(pos1 + 1:pos2 - 1), "(I6)", iostat=iostat_val) tempQuantity
+            tempPrice = adjustl(trim(line(pos2 + 1:pos3 - 1)))
+            tempUbication = adjustl(trim(line(pos3 + 1:)))
+
+            if (iostat_val /= 0) then
+               print *, "Error al leer la linea"
+            else
+
+               print *, 'Nombre:', trim(tempName)
+               print *, 'Cantidad', tempQuantity
+               print *, 'Precio:', tempPrice
+               print *, 'Ubicación:', trim(tempUbication)
+
             end if
          end if
       end do

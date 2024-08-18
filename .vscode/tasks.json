@@ -7,7 +7,7 @@
       "command": "gfortran",
       "args": [
         "-c",
-        "modules/producto.f90",
+        "modules/equipment.f90",
         "modules/readFiles.f90",
         "main.f90"
       ],
@@ -22,7 +22,7 @@
       "label": "Crear .exe",
       "type": "shell",
       "command": "gfortran",
-      "args": ["-o", "build/build", "main.f90", "producto.o", "readFiles.o"],
+      "args": ["-o", "build/build", "main.f90", "equipment.o", "readFiles.o"],
       "group": {
         "kind": "build",
         "isDefault": true
