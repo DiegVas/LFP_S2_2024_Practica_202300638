@@ -15,7 +15,8 @@ contains
       type(Equipment):: Equipment
 
       !Variables temporales
-      character(len=100) :: tempName, tempPrice, tempUbication
+      character(len=100) :: tempName, tempUbication
+      real :: tempPrice
       integer :: tempQuantity
       integer :: pos1, pos2, pos3
 
@@ -65,7 +66,7 @@ contains
             !Extraer los valores
             tempName = adjustl(trim(line(14:pos1 - 1)))
             read (line(pos1 + 1:pos2 - 1), "(I6)", iostat=iostat_val) tempQuantity
-            tempPrice = adjustl(trim(line(pos2 + 1:pos3 - 1)))
+            read (line(pos2 + 1:pos3 - 1), "(F6.2)", iostat=iostat_val) tempPrice
             tempUbication = adjustl(trim(line(pos3 + 1:)))
 
             if (iostat_val /= 0) then
@@ -76,6 +77,12 @@ contains
                print *, 'Cantidad', tempQuantity
                print *, 'Precio:', tempPrice
                print *, 'Ubicación:', trim(tempUbication)
+
+               !Crear el equipo
+               Equipment%Name = tempName
+               Equipment%Quantity = tempQuantity
+               Equipment%Price = tempPrice
+               Equipment%Ubication = tempUbication
 
             end if
          end if
