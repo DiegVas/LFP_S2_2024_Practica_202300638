@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "gfortran",
+      "args": [
+        "-o",
+        "Main.exe",
+        "Main.f90",
+        "data/Producto.f90",
+        "data/readFiles.f90"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
