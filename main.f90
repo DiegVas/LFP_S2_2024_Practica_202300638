@@ -1,6 +1,6 @@
 program Main
 
-   use ReadFiles
+   use readFiles
 
    implicit none
    ! Declaracion de variables

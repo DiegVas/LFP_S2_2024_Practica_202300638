@@ -1,21 +1,22 @@
-module Producto
+module producto
+   use readFiles
    implicit none
-   type :: producto
+   type :: productos
       character(len=100) :: nombre
       integer :: cantidad
       real :: precio
       character(len=100) :: bodega
    contains
       procedure :: mostrarProducto
-   end type producto
+   end type productos
 
 contains
    subroutine mostrarProducto(this)
       implicit none
-      class(producto), intent(in) :: this
+      class(productos), intent(in) :: this
       print *, "Nombre: ", this%nombre
       print *, "Cantidad: ", this%cantidad
       print *, "Precio: ", this%precio
    end subroutine mostrarProducto
 
-end module Producto
+end module producto

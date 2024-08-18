@@ -2,21 +2,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
+      "label": "Compilar Fortran",
       "type": "shell",
       "command": "gfortran",
       "args": [
+        "-c",
+        "modules/producto.f90",
+        "modules/readFiles.f90",
+        "main.f90",
         "-o",
-        "Main.exe",
-        "Main.f90",
-        "data/Producto.f90",
-        "data/readFiles.f90"
+        "build/build.exe main.f90 readFiles.o producto.o"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": []
+      "problemMatcher": ["$gcc"],
+      "detail": "Tarea generada por el usuario para compilar archivos Fortran"
     }
   ]
 }

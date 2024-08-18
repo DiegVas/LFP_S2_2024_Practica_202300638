@@ -1,32 +1,30 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Depurar Fortran",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "build/build.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
         {
-            "name": "(gdb) Iniciar",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/Practica_No_1.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "build"
-        },
-        {
-            "name": "(gdb) Attach",
-            "type": "cppdbg",
-            "request": "attach",
-            "program": "${workspaceFolder}/Practica_No_1.exe",
-            "processId": "${command:pickProcess}"
+          "description": "Habilitar impresión de formato pretty para gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
         }
-    ]
+      ],
+      "preLaunchTask": "Compilar Fortran",
+      "miDebuggerPath": "C:/path/to/gdb.exe", // Asegúrate de que esta ruta sea correcta
+      "logging": {
+        "moduleLoad": false,
+        "trace": false
+      }
+    }
+  ]
 }
