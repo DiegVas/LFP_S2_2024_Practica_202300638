@@ -1,30 +1,28 @@
 {
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  // Comando para ejecutar el debbuger por consola: gfortran -g -Wall -o dragon_ball_z.exe dragon_ball_z.f90
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Depurar Fortran",
+      "name": "RUN GDB",
       "type": "cppdbg",
       "request": "launch",
-      "program": "build/build.exe",
+      "program": "${workspaceFolder}/build/build.exe",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Crear .exe",
+      "cwd": "${workspaceFolder}/build",
       "environment": [],
       "externalConsole": false,
-      "MIMode": "gdb",
-      "setupCommands": [
-        {
-          "description": "Habilitar impresión de formato pretty para gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ],
-      "preLaunchTask": "Compilar Fortran",
-      "miDebuggerPath": "C:/path/to/gdb.exe", // Asegúrate de que esta ruta sea correcta
-      "logging": {
-        "moduleLoad": false,
-        "trace": false
-      }
+      "MIMode": "gdb"
+    },
+    {
+      "name": "Intel Debug Attach",
+      "type": "cppvsdbg",
+      "request": "attach",
+      "processId": "${command:pickProcess}"
     }
   ]
 }

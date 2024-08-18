@@ -1,4 +1,6 @@
 module readFiles
+
+   use equipment_type
 contains
 
    ! Función para leer el archivo y devolver su contenido
@@ -8,9 +10,17 @@ contains
       integer :: unit_number, iostat_val ! Unidad de asignado /  Valor de estado de E/S
       character(len=100) :: line ! Almacernar cada línea
 
+      !Variables para analisis del archivo
       character(len=100) :: Filename ! Nombre del archivo
       integer :: start, end, len_line ! Inicio, fin, longitud de la línea
-      character(len=100) :: word
+      character(len=100) :: word ! Primera palabra de la línea
+      type(Equipment):: Equipment
+
+      !Variables temporales
+      character(len=100) :: tempName
+      integer :: tempQuantity
+      real :: tempPrice
+      character(len=100) :: tempUbication
 
       ! Inicializar variables
       contenido = ''
@@ -31,8 +41,10 @@ contains
       end if
 
       ! Abrir archivo
-      open (newunit=unit_number, file=Filename//'.inv', status='old', action='read', iostat=iostat_val)
+
+      open (newunit=unit_number, file='../data/'//trim(Filename)//'.inv', status='old', action='read', iostat=iostat_val)
       if (iostat_val /= 0) then
+
          ! Error al abrir el archivo
          print *, '--------------------------------'
          print *, 'Error al abrir el archivo o no se encontro el archivo'
@@ -46,15 +58,17 @@ contains
          read (unit_number, '(A)', iostat=iostat_val) line
          if (iostat_val /= 0) exit
          if (index(line, 'crear_equipo') == 1) then
-            ! Si la línea empieza con crear_equipo
-            ! Se debe reemplazar por el nombre del equipo
-            start = index(line, 'crear_equipo') + 13
-            end = index(line, 'con_') - 1
-            len_line = end - start + 1
-            word = line(start:start + len_line - 1)
-
+            ! Extraer los valores
+            read (line(14:), '(A50, I5, F10.2, A50)', iostat=iostat_val) tempName, tempQuantity, tempPrice, tempUbication
+            if (iostat_val == 0) then
+               ! Guardar en el tipo Equipo
+               Equipment%name = trim(tempName)
+               Equipment%quantity = tempQuantity
+               Equipment%price = tempPrice
+               Equipment%ubication = trim(tempUbication)
+               ! Aquí puedes hacer lo que necesites con la variable equipo
+            end if
          end if
-         contenido = trim(adjustl(contenido))//trim(adjustl(line))//char(10)
       end do
 
       ! Cerrar archivo
