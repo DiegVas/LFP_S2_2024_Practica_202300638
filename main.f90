@@ -2,6 +2,7 @@ program Main
 
    use read_inventory
    use equipment_type
+   use read_mov
 
    implicit none
    ! Declaracion de variables
@@ -39,7 +40,7 @@ program Main
          end if
 
       case (2)
-         !call resta()
+         equipmentList = readMov()
       case (3)
          call printEquipmentList(EquipmentList)
          print *, "Informe de Inventario"
