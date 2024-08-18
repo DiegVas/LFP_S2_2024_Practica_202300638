@@ -4,8 +4,4 @@ crear_equipo Computadoras;50;3000.00;BodegaB
 crear_equipo Escritorios;75;100.75;BodegaC
 crear_equipo Sillas;150;45.00;BodegaC
 crear_equipo Monitores;80;250.00;BodegaA
-crear_equipo Teclados;200;30.00;BodegaB
-crear_equipo Ratones;180;25.00;BodegaA
-crear_equipo Impresoras;40;150.00;BodegaC
-crear_equipo Proyectores;20;500.00;BodegaB
-crear_equipo Mesas;60;120.00;BodegaA
+

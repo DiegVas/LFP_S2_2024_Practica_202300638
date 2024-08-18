@@ -2,13 +2,18 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Limpiar",
+      "type": "shell",
+      "command": "cls"
+    },
+    {
       "label": "Compilar Fortran",
       "type": "shell",
       "command": "gfortran",
       "args": [
         "-c",
         "modules/equipment.f90",
-        "modules/readFiles.f90",
+        "modules/read_inventory.f90",
         "main.f90"
       ],
       "group": {
@@ -16,13 +21,20 @@
         "isDefault": true
       },
       "problemMatcher": ["$gcc"],
+      "dependsOn": "Limpiar",
       "detail": "Tarea generada por el usuario para compilar archivos Fortran"
     },
     {
       "label": "Crear .exe",
       "type": "shell",
       "command": "gfortran",
-      "args": ["-o", "build/build", "main.f90", "equipment.o", "readFiles.o"],
+      "args": [
+        "-o",
+        "build/build",
+        "main.f90",
+        "equipment.o",
+        "read_inventory.o"
+      ],
       "group": {
         "kind": "build",
         "isDefault": true

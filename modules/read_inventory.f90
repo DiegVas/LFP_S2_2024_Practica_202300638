@@ -1,18 +1,18 @@
-module readFiles
-
+module read_inventory
    use equipment_type
 contains
 
    ! Función para leer el archivo y devolver su contenido
-   function loadInventory() result(contenido)
+   function loadInventory() result(EquipmentList)
       implicit none
-      character(len=:), allocatable :: contenido
-      integer :: unit_number, iostat_val ! Unidad de asignado /  Valor de estado de E/S
-      character(len=100) :: line ! Almacernar cada línea
 
-      !Variables para analisis del archivo
-      character(len=100) :: Filename ! Nombre del archivo
+      type(Equipment), allocatable :: EquipmentList(:)
       type(Equipment):: Equipment
+      integer :: count
+
+      ! Variables para lectura de archivo
+      integer :: unit_number, iostat_val ! Unidad de asignado /  Valor de estado de E/S
+      character(len=100) :: line, Filename! Almacernar cada línea / Nombre del archivo
 
       !Variables temporales
       character(len=100) :: tempName, tempUbication
@@ -21,8 +21,9 @@ contains
       integer :: pos1, pos2, pos3
 
       ! Inicializar variables
-      contenido = ''
       Filename = ''
+      count = 0
+      allocate (EquipmentList(0))
 
       ! Preguntar por el nombre
       print *, '--------------------------------'
@@ -45,10 +46,12 @@ contains
 
       ! Error al abrir el archivo
       if (iostat_val /= 0) then
+         print *, ''
          print *, '--------------------------------'
          print *, 'Error al abrir el archivo o no se encontro el archivo'
          print *, 'Por favor, verifique el nombre del archivo'
          print *, '--------------------------------'
+         print *, ''
          return
       end if
 
@@ -72,17 +75,16 @@ contains
             if (iostat_val /= 0) then
                print *, "Error al leer la linea"
             else
-
-               print *, 'Nombre:', trim(tempName)
-               print *, 'Cantidad', tempQuantity
-               print *, 'Precio:', tempPrice
-               print *, 'Ubicación:', trim(tempUbication)
-
                !Crear el equipo
                Equipment%Name = tempName
                Equipment%Quantity = tempQuantity
                Equipment%Price = tempPrice
                Equipment%Ubication = tempUbication
+
+               !Agregar el equipo a la lista
+               count = count + 1
+               call addEquipmentToList(EquipmentList, Equipment, count)
+               print *, "Equipo creado"
 
             end if
          end if
@@ -91,4 +93,34 @@ contains
       ! Cerrar archivo
       close (unit_number)
    end function loadInventory
-end module ReadFiles
+
+   subroutine addEquipmentToList(equipment_List, Equipments, count)
+      implicit none
+      type(Equipment), allocatable, intent(inout) :: equipment_List(:)
+      type(Equipment), intent(in) :: Equipments
+      integer, intent(in) :: count
+      integer :: i
+      logical :: found
+
+      if (allocated(equipment_List)) then
+         equipment_List = [equipment_List, Equipments]
+      else
+         allocate (equipment_List(count))
+         equipment_List(count) = Equipments
+      end if
+   end subroutine addEquipmentToList
+
+   function margeEquipmentsLists(oldList, newList) result(margeList)
+      implicit none
+      type(Equipment), allocatable, intent(in) :: oldList(:), newList(:)
+      type(Equipment), allocatable :: margeList(:)
+      integer :: i
+      margeList = oldList
+
+      do i = 1, size(newList)
+         call addEquipmentToList(margeList, newList(i), size(margeList))
+      end do
+
+   end function margeEquipmentsLists
+
+end module read_inventory

@@ -1,12 +1,17 @@
 program Main
 
-   use readFiles
+   use read_inventory
+   use equipment_type
 
    implicit none
    ! Declaracion de variables
 
    integer :: option
-   character(len=:), allocatable :: contenido
+   type(Equipment), allocatable :: EquipmentList(:)
+   type(Equipment), allocatable :: New_EquipmentList(:)
+
+   !inicializar variables
+   allocate (EquipmentList(0))
 
    ! Mostrar Menu
    do while (option /= 4)
@@ -25,18 +30,40 @@ program Main
 
       select case (option)
       case (1)
-         contenido = loadInventory()
-         print *, contenido
+
+         if (size(EquipmentList) == 0) then
+            EquipmentList = loadInventory()
+         else
+            New_EquipmentList = loadInventory()
+            EquipmentList = margeEquipmentsLists(EquipmentList, New_EquipmentList)
+         end if
+
       case (2)
          !call resta()
       case (3)
-         !call multiplicacion()
+         call printEquipmentList(EquipmentList)
+         print *, "Informe de Inventario"
+         print *, size(EquipmentList)
       case (4)
          print *, "Saliendo del programa"
       case default
          print *, "Opcion no valida"
       end select
    end do
+
+contains
+   subroutine printEquipment(e)
+      type(Equipment), intent(in) :: e
+      call e%mostrarProducto()
+   end subroutine printEquipment
+
+   subroutine printEquipmentList(list)
+      type(Equipment), allocatable, intent(in) :: list(:)
+      integer :: i
+      do i = 1, size(list)
+         call printEquipment(list(i))
+      end do
+   end subroutine printEquipmentList
 
 end program Main
 
