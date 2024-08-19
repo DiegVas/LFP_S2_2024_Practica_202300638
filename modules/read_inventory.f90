@@ -2,7 +2,6 @@ module read_inventory
    use equipment_type
 contains
 
-   ! Función para leer el archivo y devolver su contenido
    function loadInventory() result(EquipmentList)
       implicit none
 
@@ -26,32 +25,35 @@ contains
       allocate (EquipmentList(0))
 
       ! Preguntar por el nombre
-      print *, '--------------------------------'
-      print *, 'Si desea salir, ingrese 0'
-      print *, '--------------------------------'
-      print *, 'Ingrese el nombre del archivo: '
+      print *, '////////////////////////////////////////'
+      print *, 'Por favor ingrese el nombre del archivo'
+      print *, '       Si desea salir ingrese 0'
+      print *, '////////////////////////////////////////'
+      print *, ""
 
+      write (*, '(A)', advance='no') 'Ingrese el nombre del archivo: '
       read *, Filename
       print *, ""
 
+      ! No se ingresó un nombre
       if (Filename == "0") then
-         ! No se ingresó un nombre
-         print *, 'No se ingresó un nombre'
+         print *, '//////////////////////////////////////'
+         print *, '              Volviendo'
+         print *, '//////////////////////////////////////'
          print *, ""
          return
       end if
 
       ! Abrir archivo
-
       open (newunit=unit_number, file='../data/'//trim(Filename)//'.inv', status='old', action='read', iostat=iostat_val)
 
       ! Error al abrir el archivo
       if (iostat_val /= 0) then
          print *, ''
-         print *, '--------------------------------'
+         print *, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
          print *, 'Error al abrir el archivo o no se encontro el archivo'
-         print *, 'Por favor, verifique el nombre del archivo'
-         print *, '--------------------------------'
+         print *, '    Por favor, verifique el nombre del archivo'
+         print *, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
          print *, ''
          return
       end if
@@ -74,8 +76,13 @@ contains
             tempUbication = adjustl(trim(line(pos3 + 1:)))
 
             if (iostat_val /= 0) then
-               print *, "Error al leer la linea"
+               print *, ''
+               print *, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+               print *, '               Error al LEER LA LINEA'
+               print *, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+               print *, ''
             else
+
                !Crear el equipo
                Equipment%Name = tempName
                Equipment%Quantity = tempQuantity
@@ -92,6 +99,13 @@ contains
 
       ! Cerrar archivo
       close (unit_number)
+
+      print *, ''
+      print *, '////////////////////////////////////////'
+      print *, '    INVENTARIO CARGADO CON EXITO'
+      print *, '////////////////////////////////////////'
+      print *, ''
+
    end function loadInventory
 
    subroutine addEquipmentToList(equipment_List, Equipments, count)
