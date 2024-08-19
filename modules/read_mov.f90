@@ -100,7 +100,22 @@ contains
                print *, ""
             end if
          else if (index(line, 'eliminar_equipo') == 1) then
+            indexItem = isEquipmentInListIndex(EquipmentLists, Equipment)
+            print *, indexItem
+            if (indexItem /= -1) then
+               if (EquipmentLists(indexItem)%Quantity >= Equipment%Quantity) then
+                  EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity - Equipment%Quantity
 
+                  print *, "----------------------"
+                  print *, EquipmentLists(indexItem)%Quantity
+                  print *, "----------------------"
+                  print *, ""
+               else
+                  print *, "Error: La cantidad a eliminar excede la cantidad disponible."
+               end if
+            else
+               print *, "Error: El equipo no se encuentra en la lista."
+            end if
          end if
       end do
 
