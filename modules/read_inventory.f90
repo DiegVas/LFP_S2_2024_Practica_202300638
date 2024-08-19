@@ -84,7 +84,6 @@ contains
                !Agregar el equipo a la lista
                count = count + 1
                call addEquipmentToList(EquipmentList, Equipment, count)
-               print *, "Equipo creado"
 
             end if
          end if
@@ -116,32 +115,28 @@ contains
       margeList = oldList
 
       do i = 1, size(newList)
-         call addEquipmentToList(margeList, newList(i), size(margeList))
+         if (.not. isEquipmentInList(margeList, newList(i))) then
+            call addEquipmentToList(margeList, newList(i), size(margeList))
+         end if
       end do
 
    end function margeEquipmentsLists
 
-   function isEquipmentInList(oldList, newList) result(isInList)
+   function isEquipmentInList(oldList, Equipments) result(isInList)
       implicit none
-      type(Equipment), allocatable, intent(in) :: oldList(:), newList(:)
+      type(Equipment), allocatable, intent(in) :: oldList(:)
+      type(Equipment) :: Equipments
 
       logical :: isInList
-      integer :: i, j
+      integer :: i
 
       isInList = .false.
 
-      if (allocated(oldList) .and. allocated(newList)) then
-         do i = 1, size(oldList)
-            do j = 1, size(newList)
-               if (trim(oldList(i)%name) == trim(newList(j)%name) .and. &
-                   trim(oldList(i)%ubication) == trim(newList(j)%ubication)) then
-                  isInList = .true.
-                  exit
-               end if
-            end do
-            if (isInList) exit
-         end do
-      end if
+      do i = 1, size(oldList)
+         if (trim(oldList(i)%name) == trim(Equipments%name) .AND. trim(oldList(i)%name) == trim(Equipments%name)) then
+            isInList = .true.
+         end if
+      end do
 
    end function isEquipmentInList
 
