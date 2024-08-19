@@ -99,8 +99,6 @@ contains
       type(Equipment), allocatable, intent(inout) :: equipment_List(:)
       type(Equipment), intent(in) :: Equipments
       integer, intent(in) :: count
-      integer :: i
-      logical :: found
 
       if (allocated(equipment_List)) then
          equipment_List = [equipment_List, Equipments]
@@ -122,5 +120,29 @@ contains
       end do
 
    end function margeEquipmentsLists
+
+   function isEquipmentInList(oldList, newList) result(isInList)
+      implicit none
+      type(Equipment), allocatable, intent(in) :: oldList(:), newList(:)
+
+      logical :: isInList
+      integer :: i, j
+
+      isInList = .false.
+
+      if (allocated(oldList) .and. allocated(newList)) then
+         do i = 1, size(oldList)
+            do j = 1, size(newList)
+               if (trim(oldList(i)%name) == trim(newList(j)%name) .and. &
+                   trim(oldList(i)%ubication) == trim(newList(j)%ubication)) then
+                  isInList = .true.
+                  exit
+               end if
+            end do
+            if (isInList) exit
+         end do
+      end if
+
+   end function isEquipmentInList
 
 end module read_inventory
