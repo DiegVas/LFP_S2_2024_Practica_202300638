@@ -32,6 +32,7 @@ contains
       print *, 'Ingrese el nombre del archivo: '
 
       read *, Filename
+      print *, ""
 
       if (Filename == "0") then
          ! No se ingresó un nombre

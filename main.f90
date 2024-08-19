@@ -40,8 +40,9 @@ program Main
          end if
 
       case (2)
-         equipmentList = readMov()
+         EquipmentList = readMov(EquipmentList)
       case (3)
+         EquipmentList = EquipmentList
          call printEquipmentList(EquipmentList)
          print *, "Informe de Inventario"
          print *, size(EquipmentList)
@@ -53,6 +54,7 @@ program Main
    end do
 
 contains
+
    subroutine printEquipment(e)
       type(Equipment), intent(in) :: e
       call e%mostrarProducto()
