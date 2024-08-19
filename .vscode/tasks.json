@@ -15,6 +15,7 @@
         "modules/equipment.f90",
         "modules/read_inventory.f90",
         "modules/read_mov.f90",
+        "modules/generateinfo.f90",
         "main.f90"
       ],
       "group": {
@@ -35,7 +36,8 @@
         "main.f90",
         "equipment.o",
         "read_inventory.o",
-        "read_mov.o"
+        "read_mov.o",
+        "generateinfo.o"
       ],
       "group": {
         "kind": "build",

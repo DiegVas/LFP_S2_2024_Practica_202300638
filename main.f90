@@ -3,6 +3,7 @@ program Main
    use read_inventory
    use equipment_type
    use read_mov
+   use generateInfo
 
    implicit none
    ! Declaracion de variables
@@ -46,8 +47,10 @@ program Main
          call printEquipmentList(EquipmentList)
          print *, "Informe de Inventario"
          print *, size(EquipmentList)
+         call generar_informe_inventario(EquipmentList, size(EquipmentList))
       case (4)
          print *, "Saliendo del programa"
+         stop
       case default
          print *, "Opcion no valida"
       end select
