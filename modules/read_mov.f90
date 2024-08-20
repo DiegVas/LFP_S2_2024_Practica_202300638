@@ -42,6 +42,7 @@ contains
          print *, '              Volviendo'
          print *, '//////////////////////////////////////'
          print *, ""
+         movList = EquipmentLists
          return
       end if
 

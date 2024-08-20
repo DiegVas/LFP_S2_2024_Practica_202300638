@@ -48,6 +48,11 @@ program Main
 
       case (2)
          ! Cargar Instrucciones de Movimientos
+         print *, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+         print *, "                Ingresar Instrucciones"
+         print *, "---------------------------------------------------"
+         print *, ""
+
          if (size(EquipmentList) == 0) then
             call initailContidition()
             cycle

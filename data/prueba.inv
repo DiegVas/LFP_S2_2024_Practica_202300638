@@ -49,6 +49,15 @@ crear_equipo Lavavajillas;385;600.00;BodegaB
 crear_equipo Hornos;395;500.00;BodegaC
 crear_equipo Planchas;405;50.00;BodegaA
 crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
+crear_equipo Televisores;415;1000.00;BodegaB
 crear_equipo DVDs;425;150.00;BodegaC
 crear_equipo BluRays;435;200.00;BodegaA
 crear_equipo Videocámaras;445;800.00;BodegaB
