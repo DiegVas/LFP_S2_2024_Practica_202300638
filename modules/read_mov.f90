@@ -1,6 +1,7 @@
 module read_mov
 
    use equipment_type
+
 contains
 
    function readMov(EquipmentLists) result(MovList)
@@ -16,29 +17,30 @@ contains
 
       !Variables temporales
       character(len=100) :: tempName, tempUbication
-      integer :: first_space
-      integer :: tempQuantity
       integer :: pos1, pos2
-      integer :: tempInstruction
-      integer :: indexItem
+      integer :: tempInstruction, indexItem, first_space, tempQuantity
 
       ! Inicializar variables}
-      allocate (MovList(0))
       Filename = ''
       count = 0
       tempInstruction = 0
 
       ! Preguntar por el nombre
-      print *, '--------------------------------'
-      print *, 'Si desea salir, ingrese 1000'
-      print *, '--------------------------------'
-      print *, 'Ingrese el nombre del archivo: '
+      print *, '////////////////////////////////////////'
+      print *, 'Por favor ingrese el nombre del archivo'
+      print *, '       Si desea salir ingrese 0'
+      print *, '////////////////////////////////////////'
+      print *, ""
 
+      write (*, '(A)', advance='no') 'Ingrese el nombre del archivo: '
       read *, Filename
+      print *, ""
 
+      ! No se ingresó un nombre
       if (Filename == "0") then
-         ! No se ingresó un nombre
-         print *, 'No se ingresó un nombre'
+         print *, '//////////////////////////////////////'
+         print *, '              Volviendo'
+         print *, '//////////////////////////////////////'
          print *, ""
          return
       end if
@@ -50,11 +52,12 @@ contains
       ! Error al abrir el archivo
       if (iostat_val /= 0) then
          print *, ''
-         print *, '--------------------------------'
+         print *, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
          print *, 'Error al abrir el archivo o no se encontro el archivo'
-         print *, 'Por favor, verifique el nombre del archivo'
-         print *, '--------------------------------'
+         print *, '    Por favor, verifique el nombre del archivo'
+         print *, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
          print *, ''
+         movList = EquipmentLists
          return
       end if
 
@@ -88,41 +91,55 @@ contains
             end if
          end if
 
-         if (index(line, 'agregar_stock') == 1) then
-            indexItem = isEquipmentInListIndex(EquipmentLists, Equipment)
-            print *, indexItem
-            if (indexItem /= -1) then
+         ! Verificar si el equipo ya existe en la lista
+         indexItem = isEquipmentInListIndex(EquipmentLists, Equipment)
+
+         if (indexItem /= -1) then
+            if (index(line, 'agregar_stock') == 1) then
+
                EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity + Equipment%Quantity
 
-               print *, "----------------------"
-               print *, EquipmentLists(indexItem)%Quantity
-               print *, "----------------------"
-               print *, ""
-            end if
-         else if (index(line, 'eliminar_equipo') == 1) then
-            indexItem = isEquipmentInListIndex(EquipmentLists, Equipment)
-            print *, indexItem
-            if (indexItem /= -1) then
-               if (EquipmentLists(indexItem)%Quantity >= Equipment%Quantity) then
-                  EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity - Equipment%Quantity
+            else if (index(line, 'eliminar_equipo') == 1) then
 
-                  print *, "----------------------"
-                  print *, EquipmentLists(indexItem)%Quantity
-                  print *, "----------------------"
-                  print *, ""
+               if (EquipmentLists(indexItem)%Quantity >= Equipment%Quantity) then
+
+                  EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity + Equipment%Quantity
+
                else
-                  print *, "Error: La cantidad a eliminar excede la cantidad disponible."
+
+                  print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                  print *, "Error: El Equipo: ", trim(Equipment%name), " Exede la cantidad disponible."
+                  print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                  print *, ""
+
                end if
+
             else
-               print *, "Error: El equipo no se encuentra en la lista."
+
+               print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+               print *, "Error: El Equipo: ", trim(Equipment%name), "no se encuentra en la lista."
+               print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+               print *, ""
+
             end if
          end if
       end do
 
+      close (unit_number)
+
+      print *, ''
+      print *, '////////////////////////////////////////'
+      print *, '    INSTRUCIONES CARGADO CON EXITO'
+      print *, '////////////////////////////////////////'
+      print *, ''
+
+      ! Devolver cambios
       movList = EquipmentLists
+
    end function
 
    function isEquipmentInListIndex(List, Equipments) result(index)
+
       implicit none
       type(Equipment), allocatable, intent(in) :: List(:)
       type(Equipment), intent(in) :: Equipments
