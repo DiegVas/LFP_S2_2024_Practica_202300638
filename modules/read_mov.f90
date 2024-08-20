@@ -114,15 +114,14 @@ contains
                   print *, ""
 
                end if
-
-            else
-
-               print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-               print *, "Error: El Equipo: ", trim(Equipment%name), "no se encuentra en la lista."
-               print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-               print *, ""
-
             end if
+         else
+
+            print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+            print *, "Error: El Equipo: ", trim(Equipment%name), "no se encuentra en la lista."
+            print *, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+            print *, ""
+
          end if
       end do
 

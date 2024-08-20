@@ -5,3 +5,5 @@ agregar_stock Escritorios;20;BodegaC
 eliminar_equipo Computadoras;20;BodegaB
 eliminar_equipo Lápices;100;BodegaA
 eliminar_equipo Escritorios;15;BodegaC
+eliminar_equipo Hola;50;BodegaQ
+eliminar_equipo COMO;10;QQQQQ
