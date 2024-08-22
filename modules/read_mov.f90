@@ -97,14 +97,14 @@ contains
 
          if (indexItem /= -1) then
             if (index(line, 'agregar_stock') == 1) then
-
+               
                EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity + Equipment%Quantity
 
             else if (index(line, 'eliminar_equipo') == 1) then
 
                if (EquipmentLists(indexItem)%Quantity >= Equipment%Quantity) then
-
-                  EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity + Equipment%Quantity
+      
+                  EquipmentLists(indexItem)%Quantity = EquipmentLists(indexItem)%Quantity - Equipment%Quantity
 
                else
 

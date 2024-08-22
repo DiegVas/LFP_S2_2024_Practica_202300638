@@ -148,7 +148,7 @@ contains
       isInList = .false.
 
       do i = 1, size(oldList)
-         if (trim(oldList(i)%name) == trim(Equipments%name) .AND. trim(oldList(i)%name) == trim(Equipments%name)) then
+         if (trim(oldList(i)%name) == trim(Equipments%name) .AND. trim(oldList(i)%Ubication) == trim(Equipments%Ubication)) then
             isInList = .true.
          end if
       end do
